@@ -21,7 +21,7 @@ internal interface CharacterListRepository {
                     enablePlaceholders = false,
                     prefetchDistance = 5
                 ),
-                pagingSourceFactory = { remoteDataSource.getUsers() }
+                pagingSourceFactory = { remoteDataSource.fetchUsers() }
             ).observable
         }
     }
