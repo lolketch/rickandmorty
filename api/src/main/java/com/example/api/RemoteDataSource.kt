@@ -6,12 +6,15 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
-class RemoteDataSource @Inject constructor(private val retrofitApi: CharactersApi) {
-
-    fun fetchUsers() = GetCharactersRxPagingSource(retrofitApi)
+class RemoteDataSource @Inject constructor(
+    private val retrofitApi: CharactersApi,
+    private val getCharactersRxPagingSource: GetCharactersRxPagingSource
+) {
+    fun fetchUsers() = getCharactersRxPagingSource
 }
 
-class GetCharactersRxPagingSource(private val retrofitApi: CharactersApi) : RxPagingSource<Int, CharacterDto>() {
+class GetCharactersRxPagingSource @Inject constructor(private val retrofitApi: CharactersApi) :
+    RxPagingSource<Int, CharacterDto>() {
 
     override fun getRefreshKey(state: PagingState<Int, CharacterDto>): Int? {
         val anchorPosition = state.anchorPosition ?: return null
