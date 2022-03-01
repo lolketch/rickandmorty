@@ -8,3 +8,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "rickandmorty"
 include ':app'
+include ':api'
+include ':core'
+include ':navigation'
+include ':character_list'
