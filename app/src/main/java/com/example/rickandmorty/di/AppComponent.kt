@@ -1,6 +1,7 @@
 package com.example.rickandmorty.di
 
 import android.app.Application
+import com.example.api.RemoteDataSource
 import com.example.character_list.di.CharacterListDeps
 import com.example.rickandmorty.di.module.NetworkModule
 import dagger.BindsInstance
@@ -11,6 +12,8 @@ import javax.inject.Scope
 @AppScope
 @Component(modules = [AppModule::class])
 interface AppComponent: CharacterListDeps {
+
+    override val remoteDataSource: RemoteDataSource
 
     @Component.Builder
     interface Builder {

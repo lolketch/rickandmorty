@@ -6,7 +6,7 @@ import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class RemoteDataSource @Inject constructor(private val retrofitApi: CharactersApi) :
+class MyPagingSource @Inject constructor(private val retrofitApi: CharactersApi) :
     RxPagingSource<Int, MyCharacter>() {
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, MyCharacter>> {
         val page: Int = params.key ?: 1

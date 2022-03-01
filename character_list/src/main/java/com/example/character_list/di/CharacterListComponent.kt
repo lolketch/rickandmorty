@@ -2,15 +2,17 @@ package com.example.character_list.di
 
 import androidx.annotation.RestrictTo
 import androidx.lifecycle.ViewModel
+import com.example.api.CharactersApi
 import com.example.api.RemoteDataSource
 import com.example.character_list.presentation.CharacterListFragment
-import com.example.core.FeatureScope
+import com.example.core.di.FeatureScope
+import com.example.core.di.SchedulerModule
 import dagger.Component
 import kotlin.properties.Delegates
 
 @FeatureScope
 @Component(
-    modules = [],
+    modules = [RepositoryModule::class, SchedulerModule::class],
     dependencies = [CharacterListDeps::class]
 )
 internal interface CharacterListComponent {
@@ -19,16 +21,14 @@ internal interface CharacterListComponent {
     @Component.Builder
     interface Builder {
 
-        fun deps(departmentDeps: CharacterListDeps): Builder
+        fun deps(deps: CharacterListDeps): Builder
 
         fun build(): CharacterListComponent
     }
 }
 
 interface CharacterListDeps {
-
     val remoteDataSource: RemoteDataSource
-
 }
 
 
