@@ -39,7 +39,8 @@ dependencies {
     //Paging
     def pagingVersion = "3.1.0"
     implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"
-    implementation "androidx.paging:paging-rxjava2-ktx:$pagingVersion"
+    //implementation "androidx.paging:paging-rxjava2-ktx:$pagingVersion"
+    implementation "androidx.paging:paging-rxjava3:$pagingVersion"
 
     // Dagger 2
     def dagger2_ver = '2.40.5'
@@ -48,7 +49,7 @@ dependencies {
 
     // Retrofit
     def retrofit_ver = '2.9.0'
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_ver"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofit_ver"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_ver"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_ver"
 

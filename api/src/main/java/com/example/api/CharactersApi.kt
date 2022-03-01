@@ -1,6 +1,6 @@
 package com.example.api
 
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 

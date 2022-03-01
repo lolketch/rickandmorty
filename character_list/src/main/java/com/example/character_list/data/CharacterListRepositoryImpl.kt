@@ -3,11 +3,11 @@ package com.example.character_list.data
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.rxjava2.flowable
+import androidx.paging.rxjava3.flowable
 import com.example.api.MyCharacter
 import com.example.api.RemoteDataSource
 import com.example.character_list.domain.CharacterListRepository
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
 
 internal class CharacterListRepositoryImpl @Inject constructor(private val remoteDataSource: RemoteDataSource) :

@@ -1,9 +1,8 @@
 package com.example.core.base
 
 import com.example.core.SchedulerProvider
-import io.reactivex.Flowable
-import io.reactivex.Single
-import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 abstract class UseCase<T> (
     private val schedulerProvider: SchedulerProvider
