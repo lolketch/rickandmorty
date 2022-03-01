@@ -6,12 +6,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.paging.LoadState
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.character_list.CharactersListViewState
-import com.example.character_list.R
 import com.example.character_list.databinding.FragmentCharacterListBinding
 import com.example.character_list.di.CharacterListComponentViewModel
 import com.example.core.base.BaseFragment
@@ -24,6 +25,10 @@ class CharacterListFragment : BaseFragment<FragmentCharacterListBinding>() {
     internal lateinit var viewModelFactory: Lazy<BaseViewModelFactory<CharacterListViewModel>>
     private val viewModel: CharacterListViewModel by viewModels {
         viewModelFactory.get()
+    }
+
+    private val characterListAdapter by lazy(LazyThreadSafetyMode.NONE) {
+        CharacterListAdapter()
     }
 
     override fun initBinding(
@@ -41,6 +46,21 @@ class CharacterListFragment : BaseFragment<FragmentCharacterListBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeViewState()
+
+        binding.recyclerView.run {
+            layoutManager = LinearLayoutManager(context)
+            adapter = characterListAdapter.withLoadStateHeaderAndFooter(
+                header = MyLoadStateAdapter(),
+                footer = MyLoadStateAdapter()
+            )
+        }
+        characterListAdapter.addLoadStateListener { state ->
+            if (state.refresh == LoadState.Loading) {
+            }
+            else {
+                binding.recyclerView.isVisible
+            }
+        }
     }
 
     private fun observeViewState() {
@@ -57,7 +77,8 @@ class CharacterListFragment : BaseFragment<FragmentCharacterListBinding>() {
             }
 
             is CharactersListViewState.Success -> {
-                Log.e("Data Success","${viewState.items}")
+                characterListAdapter.submitData(lifecycle = lifecycle, pagingData = viewState.pagingData)
+                Log.e("Data Success","${viewState.pagingData}")
             }
 
             is CharactersListViewState.Error -> {

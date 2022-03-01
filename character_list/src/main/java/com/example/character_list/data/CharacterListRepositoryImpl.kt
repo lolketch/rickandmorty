@@ -19,7 +19,7 @@ internal class CharacterListRepositoryImpl @Inject constructor(private val remot
                 enablePlaceholders = false,
                 prefetchDistance = 5
             ),
-            pagingSourceFactory = { remoteDataSource }
+            pagingSourceFactory = { remoteDataSource.getUsers() }
         ).flowable
     }
 }
