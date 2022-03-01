@@ -1,6 +1,5 @@
 package com.example.character_list.di
 
-import com.example.character_list.data.CharacterListRepositoryImpl
 import com.example.character_list.domain.CharacterListRepository
 import com.example.core.di.FeatureScope
 import dagger.Binds
@@ -11,5 +10,5 @@ internal interface RepositoryModule {
 
     @FeatureScope
     @Binds
-    fun bindRepository(departmentRepositoryImpl: CharacterListRepositoryImpl): CharacterListRepository
+    fun bindRepository(characterListRepositoryImpl: CharacterListRepository.Base): CharacterListRepository
 }

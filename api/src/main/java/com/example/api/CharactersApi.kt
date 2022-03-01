@@ -6,7 +6,5 @@ import retrofit2.http.Query
 
 interface CharactersApi {
     @GET("character/")
-    fun getCharacters(
-        @Query("page") page: Int,
-    ): Single<Results>
+    fun getCharacters(@Query("page") page: Int): Single<Characters>
 }

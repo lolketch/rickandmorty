@@ -9,7 +9,7 @@ import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.character_list.R
 
-class MyLoadStateAdapter : LoadStateAdapter<MyLoadStateAdapter.ItemViewHolder>() {
+class LoaderStateAdapter : LoadStateAdapter<LoaderStateAdapter.ItemViewHolder>() {
     private companion object {
         private const val ERROR = 1
         private const val PROGRESS = 0

@@ -39,7 +39,6 @@ dependencies {
     //Paging
     def pagingVersion = "3.1.0"
     implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"
-    //implementation "androidx.paging:paging-rxjava2-ktx:$pagingVersion"
     implementation "androidx.paging:paging-rxjava3:$pagingVersion"
 
     // Dagger 2

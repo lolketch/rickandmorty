@@ -47,6 +47,8 @@ dependencies {
     implementation "com.google.dagger:dagger:$dagger2_ver"
     kapt "com.google.dagger:dagger-compiler:$dagger2_ver"
 
+    implementation project(":api")
+
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'

@@ -1,14 +1,14 @@
 package com.example.core.base
 
 import com.example.core.SchedulerProvider
-import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 abstract class UseCase<T> (
     private val schedulerProvider: SchedulerProvider
 ) {
 
-    protected abstract fun buildUseCaseFlowable(): Flowable<T>
+    protected abstract fun buildUseCase(): Observable<T> // todo
     private val compositeDisposable = CompositeDisposable()
 
     fun execute(
@@ -19,7 +19,7 @@ abstract class UseCase<T> (
     ) {
         onStart()
         compositeDisposable.add(
-            buildUseCaseFlowable()
+            buildUseCase()
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.mainThread())
                 .doAfterTerminate(onFinished)

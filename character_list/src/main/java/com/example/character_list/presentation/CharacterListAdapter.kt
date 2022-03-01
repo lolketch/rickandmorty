@@ -1,50 +1,62 @@
 package com.example.character_list.presentation
 
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.api.MyCharacter
-import com.example.character_list.R
+import com.example.character_list.databinding.ItemBinding
+import com.example.character_list.domain.Character
 
-class CharacterListAdapter : PagingDataAdapter<MyCharacter, RecyclerView.ViewHolder>(COMPARATOR) {
+interface UserListAdapterClicks {
+    fun onItemClick(model: Character?)
+}
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val viewHolder = holder as DefaultViewHolder
-        viewHolder.nameCharacter.text = getItem(position)?.name
-        Glide
-            .with(viewHolder.itemView)
-            .asBitmap()
-            .fitCenter()
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .load(getItem(position)?.image)
-            .into(viewHolder.imageCharacter)
+class CharacterListAdapter : PagingDataAdapter<Character, CharacterViewHolder>(COMPARATOR) {
+
+    private var userListAdapterClicks: UserListAdapterClicks? = null
+
+    override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
+        holder.bind(getItem(position))
+
+        holder.itemView.setOnClickListener {
+            Log.e("CharacterListAdapter", "${getItem(position)?.name}")
+            userListAdapterClicks?.onItemClick(getItem(position))
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return DefaultViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
-        )
-    }
-
-    inner class DefaultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imageCharacter: ImageView = itemView.findViewById(R.id.imageCharacter)
-        val nameCharacter: TextView = itemView.findViewById(R.id.nameCharacter)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        return CharacterViewHolder(ItemBinding.inflate(layoutInflater, parent, false))
     }
 
     companion object {
-        private val COMPARATOR = object : DiffUtil.ItemCallback<MyCharacter>() {
-            override fun areItemsTheSame(oldItem: MyCharacter, newItem: MyCharacter): Boolean =
+        private val COMPARATOR = object : DiffUtil.ItemCallback<Character>() {
+            override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean =
                 oldItem == newItem
 
-            override fun areContentsTheSame(oldItem: MyCharacter, newItem: MyCharacter): Boolean =
+            override fun areContentsTheSame(oldItem: Character, newItem: Character): Boolean =
                 oldItem == newItem
+        }
+    }
+}
+
+class CharacterViewHolder(private val binding: ItemBinding) :
+    RecyclerView.ViewHolder(binding.root) {
+
+    fun bind(character: Character?) {
+        with(binding) {
+            nameCharacter.text = character?.name
+            Glide
+                .with(itemView)
+                .asBitmap()
+                .fitCenter()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .load(character?.image)
+                .into(imageCharacter)
         }
     }
 }

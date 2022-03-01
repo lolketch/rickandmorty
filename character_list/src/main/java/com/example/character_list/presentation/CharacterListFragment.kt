@@ -50,8 +50,8 @@ class CharacterListFragment : BaseFragment<FragmentCharacterListBinding>() {
         binding.recyclerView.run {
             layoutManager = LinearLayoutManager(context)
             adapter = characterListAdapter.withLoadStateHeaderAndFooter(
-                header = MyLoadStateAdapter(),
-                footer = MyLoadStateAdapter()
+                header = LoaderStateAdapter(),
+                footer = LoaderStateAdapter()
             )
         }
         characterListAdapter.addLoadStateListener { state ->
