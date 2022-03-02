@@ -38,5 +38,4 @@ class GetCharactersRxPagingSource @Inject constructor(private val retrofitApi: C
             nextKey = if (page == data.info.pages) null else page + 1
         )
     }
-
 }

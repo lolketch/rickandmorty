@@ -8,7 +8,7 @@ import com.example.character_list.domain.FetchCharacters
 import javax.inject.Inject
 
 internal class CharacterListViewModel @Inject constructor(
-    private val fetchCharacters: FetchCharacters
+    private val fetchCharacters: FetchCharacters,
 ) : ViewModel() {
     private val _viewState = MutableLiveData<CharactersListViewState>()
     val viewState: LiveData<CharactersListViewState> = _viewState

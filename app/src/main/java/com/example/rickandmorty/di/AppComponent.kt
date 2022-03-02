@@ -1,12 +1,12 @@
 package com.example.rickandmorty.di
 
 import android.app.Application
+import android.content.Context
 import com.example.api.RemoteDataSource
 import com.example.character_list.di.CharacterListDeps
+import com.example.core.InternetConnection
 import com.example.rickandmorty.di.module.NetworkModule
-import dagger.BindsInstance
-import dagger.Component
-import dagger.Module
+import dagger.*
 import javax.inject.Scope
 
 @AppScope
@@ -14,6 +14,8 @@ import javax.inject.Scope
 interface AppComponent: CharacterListDeps {
 
     override val remoteDataSource: RemoteDataSource
+
+    override val internetConnection: InternetConnection.Base
 
     @Component.Builder
     interface Builder {

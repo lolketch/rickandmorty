@@ -6,13 +6,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.character_list.CharactersListViewState
+import com.example.character_list.R
 import com.example.character_list.databinding.FragmentCharacterListBinding
 import com.example.character_list.di.CharacterListComponentViewModel
 import com.example.core.base.BaseFragment
@@ -50,16 +53,13 @@ class CharacterListFragment : BaseFragment<FragmentCharacterListBinding>() {
         binding.recyclerView.run {
             layoutManager = LinearLayoutManager(context)
             adapter = characterListAdapter.withLoadStateHeaderAndFooter(
-                header = LoaderStateAdapter(),
-                footer = LoaderStateAdapter()
+                header = LoaderStateAdapter(characterListAdapter),
+                footer = LoaderStateAdapter(characterListAdapter)
             )
         }
-        characterListAdapter.addLoadStateListener { state ->
-            if (state.refresh == LoadState.Loading) {
-            }
-            else {
-                binding.recyclerView.isVisible
-            }
+        characterListAdapter.addLoadStateListener { state: CombinedLoadStates ->
+            val refreshState = state.refresh
+            binding.recyclerView.isVisible = refreshState != LoadState.Loading
         }
     }
 

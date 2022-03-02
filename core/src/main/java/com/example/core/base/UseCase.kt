@@ -31,3 +31,29 @@ abstract class UseCase<T> (
         compositeDisposable.clear()
     }
 }
+
+//interface UseCaseTest<T> {
+//    fun buildUseCase(): Observable<T>
+//    val compositeDisposable: CompositeDisposable
+//    val schedulerProvider: SchedulerProvider
+//
+//    fun execute(
+//        onStart: () -> Unit = {},
+//        onSuccess: ((t: T) -> Unit),
+//        onError: ((t: Throwable) -> Unit),
+//        onFinished: () -> Unit = {}
+//    ) {
+//        onStart()
+//        compositeDisposable.add(
+//            buildUseCase()
+//                .subscribeOn(schedulerProvider.io())
+//                .observeOn(schedulerProvider.mainThread())
+//                .doAfterTerminate(onFinished)
+//                .subscribe(onSuccess, onError)
+//        )
+//    }
+//
+//    fun dispose() {
+//        compositeDisposable.clear()
+//    }
+//}

@@ -3,13 +3,15 @@ package com.example.character_list.presentation
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.character_list.R
 
-class LoaderStateAdapter : LoadStateAdapter<LoaderStateAdapter.ItemViewHolder>() {
+class LoaderStateAdapter(private val adapter: CharacterListAdapter) :
+    LoadStateAdapter<LoaderStateAdapter.ItemViewHolder>() {
     private companion object {
         private const val ERROR = 1
         private const val PROGRESS = 0
@@ -32,7 +34,7 @@ class LoaderStateAdapter : LoadStateAdapter<LoaderStateAdapter.ItemViewHolder>()
             )
             is LoadState.Error -> ErrorViewHolder(
                 LayoutInflater.from(parent.context).inflate(R.layout.item_error, parent, false)
-            )
+            ) { adapter.retry() }
             is LoadState.NotLoading -> error("Not supported")
         }
     }
@@ -47,11 +49,16 @@ class LoaderStateAdapter : LoadStateAdapter<LoaderStateAdapter.ItemViewHolder>()
         }
     }
 
-    class ErrorViewHolder(itemView: View) : ItemViewHolder(itemView) {
+    class ErrorViewHolder(itemView: View, private val retryCallback: () -> Unit) :
+        ItemViewHolder(itemView) {
         override fun bind(loadState: LoadState) {
             require(loadState is LoadState.Error)
             itemView.findViewById<TextView>(R.id.error_message).text =
                 loadState.error.localizedMessage
+            itemView.findViewById<Button>(R.id.retryBtn)
+                .also {
+                    it.setOnClickListener { retryCallback() }
+                }
         }
     }
 }
