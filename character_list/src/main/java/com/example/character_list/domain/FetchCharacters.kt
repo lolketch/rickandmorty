@@ -8,10 +8,9 @@ import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 
 internal class FetchCharacters @Inject constructor(
-    private val repository: CharacterListRepository,
-    schedulerProvider: SchedulerProvider
-) : UseCase<PagingData<Character>>(schedulerProvider) {
-    override fun buildUseCase(): Observable<PagingData<Character>> {
+    private val repository: CharacterListRepository
+) {
+    fun getData(): Observable<PagingData<Character>> {
         return repository.fetchCharacters().map { pagingData ->
             pagingData.map { characterDto ->
                 characterDto.toCharacter()
