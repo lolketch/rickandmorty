@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.navigation.fragment.findNavController
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +20,8 @@ import com.example.character_list.CharactersListViewState
 import com.example.character_list.R
 import com.example.character_list.databinding.FragmentCharacterListBinding
 import com.example.character_list.di.CharacterListComponentViewModel
+import com.example.character_list.domain.Character
+import com.example.core.Consts.CHARACTER_ID
 import com.example.core.base.BaseFragment
 import com.example.core.base.BaseViewModelFactory
 import dagger.Lazy
@@ -50,6 +54,15 @@ class CharacterListFragment : BaseFragment<FragmentCharacterListBinding>() {
         super.onViewCreated(view, savedInstanceState)
         observeViewState()
 
+        characterListAdapter.onAttachClick(object : UserListAdapterClicks {
+            override fun onItemClick(model: Character?) {
+                findNavController().navigate(
+                    R.id.action_characterListFragment_to_characterInfoFragment,
+                    bundleOf(CHARACTER_ID to model?.id)
+                )
+            }
+        })
+
         binding.recyclerView.run {
             layoutManager = LinearLayoutManager(context)
             adapter = characterListAdapter.withLoadStateHeaderAndFooter(
@@ -73,16 +86,19 @@ class CharacterListFragment : BaseFragment<FragmentCharacterListBinding>() {
         when (viewState) {
 
             is CharactersListViewState.Loading -> {
-                Log.e("Data Loading","Start")
+                Log.e("Data Loading", "Start")
             }
 
             is CharactersListViewState.Success -> {
-                characterListAdapter.submitData(lifecycle = lifecycle, pagingData = viewState.pagingData)
-                Log.e("Data Success","${viewState.pagingData}")
+                characterListAdapter.submitData(
+                    lifecycle = lifecycle,
+                    pagingData = viewState.pagingData
+                )
+                Log.e("Data Success", "${viewState.pagingData}")
             }
 
             is CharactersListViewState.Error -> {
-                Log.e("Data Error","${viewState.message}")
+                Log.e("Data Error", "${viewState.message}")
             }
         }
     }

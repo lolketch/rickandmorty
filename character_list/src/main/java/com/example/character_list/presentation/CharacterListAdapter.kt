@@ -19,11 +19,15 @@ class CharacterListAdapter : PagingDataAdapter<Character, CharacterViewHolder>(C
 
     private var userListAdapterClicks: UserListAdapterClicks? = null
 
+    fun onAttachClick(userListAdapterClicks: UserListAdapterClicks) {
+        this.userListAdapterClicks = userListAdapterClicks
+    }
+
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
         holder.bind(getItem(position))
 
         holder.itemView.setOnClickListener {
-            Log.e("CharacterListAdapter", "${getItem(position)?.name}")
+            Log.e("CharacterListAdapter", "${getItem(position)?.id}")
             userListAdapterClicks?.onItemClick(getItem(position))
         }
     }

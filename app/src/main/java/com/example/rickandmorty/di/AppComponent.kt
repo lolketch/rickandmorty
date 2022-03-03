@@ -3,6 +3,7 @@ package com.example.rickandmorty.di
 import android.app.Application
 import android.content.Context
 import com.example.api.RemoteDataSource
+import com.example.character_info.di.CharacterInfoDeps
 import com.example.character_list.di.CharacterListDeps
 import com.example.core.InternetConnection
 import com.example.rickandmorty.di.module.NetworkModule
@@ -11,7 +12,7 @@ import javax.inject.Scope
 
 @AppScope
 @Component(modules = [AppModule::class])
-interface AppComponent: CharacterListDeps {
+interface AppComponent: CharacterListDeps, CharacterInfoDeps {
 
     override val remoteDataSource: RemoteDataSource
 

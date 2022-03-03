@@ -10,6 +10,16 @@
         android:name="com.example.character_list.presentation.CharacterListFragment"
         android:label="fragment_character_list"
         tools:layout="@layout/fragment_character_list">
+        <action
+            android:id="@+id/action_characterListFragment_to_characterInfoFragment"
+            app:destination="@id/characterInfoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/characterInfoFragment"
+        android:name="com.example.character_info.presentation.CharacterInfoFragment"
+        android:label="fragment_character_list"
+        tools:layout="@layout/fragment_character_info">
 
     </fragment>
 
