@@ -6,8 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -17,8 +15,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.character_list.CharactersListViewState
 import com.example.character_list.R
@@ -89,7 +85,6 @@ class CharacterListFragment : BaseFragment<FragmentCharacterListBinding>() {
             } else {
                 binding.recyclerView.isVisible
                 binding.recyclerViewSkeleton.visibility = View.GONE
-                Toast.makeText(context,"Error connection", Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -14,6 +14,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.character_info.CharactersInfoViewState
 import com.example.character_info.databinding.FragmentCharacterInfoBinding
 import com.example.character_info.di.CharacterInfoComponentViewModel
+import com.example.character_info.domain.Character
 import com.example.core.Consts.CHARACTER_ID
 import com.example.core.base.BaseFragment
 import com.example.core.base.BaseViewModelFactory
@@ -44,9 +45,12 @@ class CharacterInfoFragment : BaseFragment<FragmentCharacterInfoBinding>() {
         super.onViewCreated(view, savedInstanceState)
         val characterId: Int = arguments?.getInt(CHARACTER_ID)!!
         viewModel.fetchCharacterInfo(characterId)
+        observe()
+    }
 
-        viewModel.viewState.observe(viewLifecycleOwner, {
-            bindViewState(it)
+    private fun observe() {
+        viewModel.viewState.observe(viewLifecycleOwner, { viewState ->
+            bindViewState(viewState)
         })
     }
 
@@ -54,46 +58,58 @@ class CharacterInfoFragment : BaseFragment<FragmentCharacterInfoBinding>() {
         when (viewState) {
 
             is CharactersInfoViewState.Loading -> {
-                binding.progressBar.visibility = View.VISIBLE
-                binding.imageGender.visibility = View.GONE
-                binding.imageLocation.visibility = View.GONE
-                binding.imageOrigin.visibility = View.GONE
+                viewVisibilityLoading()
             }
 
             is CharactersInfoViewState.Success -> {
-
-                Log.e(
-                    "Data Success", "${
-                        viewState.character.episode.map {
-                            it.substring(startIndex = it.lastIndexOf("/") + 1)
-                        }
-                    }"
-                )
-                binding.progressBar.visibility = View.GONE
-                binding.imageGender.visibility = View.VISIBLE
-                binding.imageLocation.visibility = View.VISIBLE
-                binding.imageOrigin.visibility = View.VISIBLE
-                with(binding) {
-                    status.text = viewState.character.status
-                    characterName.text = viewState.character.name
-                    species.text = viewState.character.species
-                    gender.text = viewState.character.gender
-                    origin.text = viewState.character.origin.name
-                    Glide
-                        .with(this@CharacterInfoFragment)
-                        .asBitmap()
-                        .fitCenter()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .load(viewState.character.image)
-                        .into(characterPhoto)
-                }
-
+                viewVisibilitySuccess()
+                initViewSuccess(viewState.character)
             }
 
             is CharactersInfoViewState.Error -> {
-                binding.progressBar.visibility = View.GONE
-                Log.e("Data Error", "${viewState.message}")
+                viewVisibilityError()
             }
+        }
+    }
+
+    private fun initViewSuccess(character: Character) {
+        with(binding) {
+            status.text = character.status
+            characterName.text = character.name
+            species.text = character.species
+            gender.text = character.gender
+            origin.text = character.origin.name
+            Glide
+                .with(this@CharacterInfoFragment)
+                .asBitmap()
+                .fitCenter()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .load(character.image)
+                .into(characterPhoto)
+        }
+    }
+
+    private fun viewVisibilitySuccess() {
+        with(binding) {
+            progressBar.visibility = View.GONE
+            imageGender.visibility = View.VISIBLE
+            imageLocation.visibility = View.VISIBLE
+            imageOrigin.visibility = View.VISIBLE
+        }
+    }
+
+    private fun viewVisibilityLoading() {
+        with(binding) {
+            progressBar.visibility = View.VISIBLE
+            imageGender.visibility = View.GONE
+            imageLocation.visibility = View.GONE
+            imageOrigin.visibility = View.GONE
+        }
+    }
+
+    private fun viewVisibilityError() {
+        with(binding) {
+            progressBar.visibility = View.GONE
         }
     }
 }
