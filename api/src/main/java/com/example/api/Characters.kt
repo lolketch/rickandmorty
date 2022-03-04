@@ -25,8 +25,16 @@ data class CharacterDto(
     @SerialName("species") val species: String,
     @SerialName("type") val type: String,
     @SerialName("gender") val gender: String,
+    @SerialName("origin") val origin: Origin,
+    @SerialName("location") val location: Location,
     @SerialName("image") val image: String,
     @SerialName("episode") val episode: List<String>,
     @SerialName("url") val url: String,
     @SerialName("created") val created: String
 )
+
+@Serializable
+data class Origin(val name: String, val url: String)
+
+@Serializable
+data class Location(val name: String, val url: String)

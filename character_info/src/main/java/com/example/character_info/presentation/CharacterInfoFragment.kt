@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.character_info.CharactersInfoViewState
 import com.example.character_info.databinding.FragmentCharacterInfoBinding
 import com.example.character_info.di.CharacterInfoComponentViewModel
@@ -25,11 +27,13 @@ class CharacterInfoFragment : BaseFragment<FragmentCharacterInfoBinding>() {
     private val viewModel: CharacterInfoViewModel by viewModels {
         viewModelFactory.get()
     }
+
     override fun onAttach(context: Context) {
         ViewModelProvider(this).get<CharacterInfoComponentViewModel>()
             .newComponent.inject(this)
         super.onAttach(context)
     }
+
     override fun initBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -50,15 +54,44 @@ class CharacterInfoFragment : BaseFragment<FragmentCharacterInfoBinding>() {
         when (viewState) {
 
             is CharactersInfoViewState.Loading -> {
-                Log.e("Data Loading", "Start")
+                binding.progressBar.visibility = View.VISIBLE
+                binding.imageGender.visibility = View.GONE
+                binding.imageLocation.visibility = View.GONE
+                binding.imageOrigin.visibility = View.GONE
             }
 
             is CharactersInfoViewState.Success -> {
 
-                Log.e("Data Success", "${viewState.character}")
+                Log.e(
+                    "Data Success", "${
+                        viewState.character.episode.map {
+                            it.substring(startIndex = it.lastIndexOf("/") + 1)
+                        }
+                    }"
+                )
+                binding.progressBar.visibility = View.GONE
+                binding.imageGender.visibility = View.VISIBLE
+                binding.imageLocation.visibility = View.VISIBLE
+                binding.imageOrigin.visibility = View.VISIBLE
+                with(binding) {
+                    status.text = viewState.character.status
+                    characterName.text = viewState.character.name
+                    species.text = viewState.character.species
+                    gender.text = viewState.character.gender
+                    origin.text = viewState.character.origin.name
+                    Glide
+                        .with(this@CharacterInfoFragment)
+                        .asBitmap()
+                        .fitCenter()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .load(viewState.character.image)
+                        .into(characterPhoto)
+                }
+
             }
 
             is CharactersInfoViewState.Error -> {
+                binding.progressBar.visibility = View.GONE
                 Log.e("Data Error", "${viewState.message}")
             }
         }

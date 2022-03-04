@@ -15,6 +15,8 @@ import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.character_list.CharactersListViewState
 import com.example.character_list.R
@@ -36,6 +38,10 @@ class CharacterListFragment : BaseFragment<FragmentCharacterListBinding>() {
 
     private val characterListAdapter by lazy(LazyThreadSafetyMode.NONE) {
         CharacterListAdapter()
+    }
+
+    private val skeletonAdapter by lazy(LazyThreadSafetyMode.NONE) {
+        SkeletonAdapter()
     }
 
     override fun initBinding(
@@ -63,6 +69,11 @@ class CharacterListFragment : BaseFragment<FragmentCharacterListBinding>() {
             }
         })
 
+        binding.recyclerViewSkeleton.run {
+            layoutManager = LinearLayoutManager(context)
+            adapter = skeletonAdapter
+        }
+
         binding.recyclerView.run {
             layoutManager = LinearLayoutManager(context)
             adapter = characterListAdapter.withLoadStateHeaderAndFooter(
@@ -72,7 +83,14 @@ class CharacterListFragment : BaseFragment<FragmentCharacterListBinding>() {
         }
         characterListAdapter.addLoadStateListener { state: CombinedLoadStates ->
             val refreshState = state.refresh
-            binding.recyclerView.isVisible = refreshState != LoadState.Loading
+
+            if (refreshState == LoadState.Loading) {
+                binding.recyclerViewSkeleton.visibility = View.VISIBLE
+            }
+            else {
+                binding.recyclerView.isVisible
+                binding.recyclerViewSkeleton.visibility = View.GONE
+            }
         }
     }
 

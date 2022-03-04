@@ -1,6 +1,8 @@
 package com.example.character_info.domain
 
 import com.example.api.CharacterDto
+import com.example.api.Location
+import com.example.api.Origin
 
 data class Character(
     val id: Int,
@@ -9,6 +11,8 @@ data class Character(
     val species: String,
     val type: String,
     val gender: String,
+    val origin: Origin,
+    val location: Location,
     val image: String,
     val episode: List<String>,
     val url: String,
@@ -23,6 +27,8 @@ fun CharacterDto.toCharacter(): Character {
         species = species,
         type = type,
         gender = gender,
+        origin = origin,
+        location = location,
         image = image,
         episode = episode,
         url = url,

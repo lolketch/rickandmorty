@@ -54,6 +54,7 @@ class CharacterViewHolder(private val binding: ItemBinding) :
     fun bind(character: Character?) {
         with(binding) {
             nameCharacter.text = character?.name
+            statusCharacter.text = character?.species
             Glide
                 .with(itemView)
                 .asBitmap()
