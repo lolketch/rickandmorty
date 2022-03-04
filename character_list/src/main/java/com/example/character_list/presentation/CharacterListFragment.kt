@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
@@ -58,17 +60,13 @@ class CharacterListFragment : BaseFragment<FragmentCharacterListBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initUi()
         observeViewState()
+        attachAdapterClick(findNavController())
+        addLoadStateListener()
+    }
 
-        characterListAdapter.onAttachClick(object : UserListAdapterClicks {
-            override fun onItemClick(model: Character?) {
-                findNavController().navigate(
-                    R.id.action_characterListFragment_to_characterInfoFragment,
-                    bundleOf(CHARACTER_ID to model?.id)
-                )
-            }
-        })
-
+    private fun initUi() {
         binding.recyclerViewSkeleton.run {
             layoutManager = LinearLayoutManager(context)
             adapter = skeletonAdapter
@@ -81,17 +79,23 @@ class CharacterListFragment : BaseFragment<FragmentCharacterListBinding>() {
                 footer = LoaderStateAdapter(characterListAdapter)
             )
         }
+    }
+
+    private fun addLoadStateListener() {
         characterListAdapter.addLoadStateListener { state: CombinedLoadStates ->
             val refreshState = state.refresh
 
             if (refreshState == LoadState.Loading) {
-                binding.recyclerViewSkeleton.visibility = View.VISIBLE
-            }
-            else {
+            } else {
                 binding.recyclerView.isVisible
                 binding.recyclerViewSkeleton.visibility = View.GONE
+                Toast.makeText(context,"Error connection", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun attachAdapterClick(navController: NavController) {
+        characterListAdapter.onAttachClick(AdapterClicks(navController))
     }
 
     private fun observeViewState() {
@@ -104,7 +108,9 @@ class CharacterListFragment : BaseFragment<FragmentCharacterListBinding>() {
         when (viewState) {
 
             is CharactersListViewState.Loading -> {
-                Log.e("Data Loading", "Start")
+                Log.e("Data Loading", "Loading")
+                binding.recyclerViewSkeleton.visibility = View.VISIBLE
+
             }
 
             is CharactersListViewState.Success -> {
@@ -112,12 +118,21 @@ class CharacterListFragment : BaseFragment<FragmentCharacterListBinding>() {
                     lifecycle = lifecycle,
                     pagingData = viewState.pagingData
                 )
-                Log.e("Data Success", "${viewState.pagingData}")
+                Log.e("Data Success", viewState.pagingData.toString())
             }
 
             is CharactersListViewState.Error -> {
-                Log.e("Data Error", "${viewState.message}")
+                Log.e("Data Error", viewState.message)
             }
         }
+    }
+}
+
+class AdapterClicks(private val findNavController: NavController) : UserListAdapterClicks {
+    override fun onItemClick(model: Character?) {
+        findNavController.navigate(
+            R.id.action_characterListFragment_to_characterInfoFragment,
+            bundleOf(CHARACTER_ID to model?.id)
+        )
     }
 }
