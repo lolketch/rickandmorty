@@ -73,6 +73,7 @@ dependencies {
     implementation project(":api")
     implementation project(":character_list")
     implementation project(":character_info")
+    implementation project(":episodes_list")
     implementation project(":core")
     implementation project(":navigation")
 

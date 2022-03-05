@@ -46,6 +46,9 @@ class CharacterInfoFragment : BaseFragment<FragmentCharacterInfoBinding>() {
         val characterId: Int = arguments?.getInt(CHARACTER_ID)!!
         viewModel.fetchCharacterInfo(characterId)
         observe()
+        binding.btnEpisodes.setOnClickListener {
+
+        }
     }
 
     private fun observe() {
@@ -79,6 +82,7 @@ class CharacterInfoFragment : BaseFragment<FragmentCharacterInfoBinding>() {
             species.text = character.species
             gender.text = character.gender
             origin.text = character.origin.name
+            location.text = character.location.name
             Glide
                 .with(this@CharacterInfoFragment)
                 .asBitmap()
