@@ -17,14 +17,20 @@ internal class EpisodesListViewModel @Inject constructor(
     val viewState: LiveData<EpisodesInfoViewState> = _viewState
 
     fun fetchEpisodes(episodes: String) {
-        _viewState.value = EpisodesInfoViewState.Loading
-        fetchEpisodes.getEpisodes(episodes)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
+        fetchEpisodes.execute(
+            data = episodes,
+            onStart = {
+                _viewState.value = EpisodesInfoViewState.Loading
+            },
+            onSuccess = {
                 _viewState.value = EpisodesInfoViewState.Success(it)
-            }, {
+            },
+            onError = {
                 _viewState.value = EpisodesInfoViewState.Error(it.localizedMessage)
-            })
+            },
+            onFinished = {
+
+            }
+        )
     }
 }

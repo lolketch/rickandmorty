@@ -16,7 +16,7 @@ internal class CharacterInfoViewModel @Inject constructor(
 
     fun fetchCharacterInfo(id: Int) {
         fetchCharacterInfo.execute(
-            id = id,
+            data = id,
             onStart = {
                 _viewState.value = CharactersInfoViewState.Loading
             },

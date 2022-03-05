@@ -5,15 +5,15 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
-abstract class UseCase<T>(
+abstract class UseCase<T, Data>(
     private val schedulerProvider: SchedulerProvider
 ) {
 
-    protected abstract fun buildUseCase(id: Int): Single<T> // todo
+    protected abstract fun buildUseCase(data: Data): Single<T> // todo
     private val compositeDisposable = CompositeDisposable()
 
     fun execute(
-        id: Int,
+        data: Data,
         onStart: () -> Unit = {},
         onSuccess: ((t: T) -> Unit),
         onError: ((t: Throwable) -> Unit),
@@ -21,7 +21,7 @@ abstract class UseCase<T>(
     ) {
         onStart()
         compositeDisposable.add(
-            buildUseCase(id)
+            buildUseCase(data)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.mainThread())
                 .doAfterTerminate(onFinished)
