@@ -1,4 +1,4 @@
-package com.example.episodes_list
+package com.example.episodes_list.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
