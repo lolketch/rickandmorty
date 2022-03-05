@@ -21,6 +21,17 @@
         android:label="fragment_character_list"
         tools:layout="@layout/fragment_character_info">
 
+        <action
+            android:id="@+id/action_characterInfoFragment_to_episodesListFragment"
+            app:destination="@id/episodesListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/episodesListFragment"
+        android:name="com.example.episodes_list.presentation.EpisodesListFragment"
+        android:label="fragment_character_list"
+        tools:layout="@layout/fragment_episodes_list">
+
     </fragment>
 
 </navigation>

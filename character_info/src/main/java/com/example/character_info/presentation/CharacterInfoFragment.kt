@@ -6,16 +6,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.character_info.CharactersInfoViewState
+import com.example.character_info.R
 import com.example.character_info.databinding.FragmentCharacterInfoBinding
 import com.example.character_info.di.CharacterInfoComponentViewModel
 import com.example.character_info.domain.Character
 import com.example.core.Consts.CHARACTER_ID
+import com.example.core.Consts.EPISODES_LIST
 import com.example.core.base.BaseFragment
 import com.example.core.base.BaseViewModelFactory
 import dagger.Lazy
@@ -46,9 +50,6 @@ class CharacterInfoFragment : BaseFragment<FragmentCharacterInfoBinding>() {
         val characterId: Int = arguments?.getInt(CHARACTER_ID)!!
         viewModel.fetchCharacterInfo(characterId)
         observe()
-        binding.btnEpisodes.setOnClickListener {
-
-        }
     }
 
     private fun observe() {
@@ -90,6 +91,16 @@ class CharacterInfoFragment : BaseFragment<FragmentCharacterInfoBinding>() {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .load(character.image)
                 .into(characterPhoto)
+            btnEpisodes.setOnClickListener {
+                val episodeRange = character.episode.map {
+                    it.substring(startIndex = it.lastIndexOf("/") + 1)
+                }.toString()
+
+                findNavController().navigate(
+                    R.id.action_characterInfoFragment_to_episodesListFragment,
+                    bundleOf(EPISODES_LIST to episodeRange)
+                )
+            }
         }
     }
 
@@ -99,6 +110,7 @@ class CharacterInfoFragment : BaseFragment<FragmentCharacterInfoBinding>() {
             imageGender.visibility = View.VISIBLE
             imageLocation.visibility = View.VISIBLE
             imageOrigin.visibility = View.VISIBLE
+            btnEpisodes.visibility = View.VISIBLE
         }
     }
 
@@ -108,11 +120,13 @@ class CharacterInfoFragment : BaseFragment<FragmentCharacterInfoBinding>() {
             imageGender.visibility = View.GONE
             imageLocation.visibility = View.GONE
             imageOrigin.visibility = View.GONE
+            btnEpisodes.visibility = View.GONE
         }
     }
 
     private fun viewVisibilityError() {
         with(binding) {
+            btnEpisodes.visibility = View.GONE
             progressBar.visibility = View.GONE
         }
     }
