@@ -11,4 +11,7 @@ interface CharactersApi {
 
     @GET("character/{id}")
     fun getCharacterInfo(@Path("id") id : Int): Single<CharacterDto>
+
+    @GET("episode/{episode}")
+    fun getEpisodesByCharacter(@Path("episode") episode : String): Single<List<EpisodeDto>>
 }

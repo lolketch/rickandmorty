@@ -13,6 +13,8 @@ class RemoteDataSource @Inject constructor(
     fun fetchCharacters() = getCharactersRxPagingSource
 
     fun fetchCharacterInfo(id: Int) = retrofitApi.getCharacterInfo(id)
+
+    fun fetchEpisodesByCharacter(episodes: String) = retrofitApi.getEpisodesByCharacter(episodes)
 }
 
 class GetCharactersRxPagingSource @Inject constructor(private val retrofitApi: CharactersApi) :
