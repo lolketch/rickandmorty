@@ -30,4 +30,9 @@ internal class EpisodesListViewModel @Inject constructor(
             }
         )
     }
+
+    override fun onCleared() {
+        fetchEpisodes.dispose()
+        super.onCleared()
+    }
 }

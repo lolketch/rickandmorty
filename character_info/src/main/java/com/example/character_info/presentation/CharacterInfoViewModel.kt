@@ -30,4 +30,9 @@ internal class CharacterInfoViewModel @Inject constructor(
             }
         )
     }
+
+    override fun onCleared() {
+        fetchCharacterInfo.dispose()
+        super.onCleared()
+    }
 }
