@@ -15,7 +15,7 @@ interface UserListAdapterClicks {
     fun onItemClick(model: Character?)
 }
 
-class CharacterListAdapter : PagingDataAdapter<Character, CharacterViewHolder>(COMPARATOR) {
+class CharactersAdapter : PagingDataAdapter<Character, CharacterViewHolder>(COMPARATOR) {
 
     private var userListAdapterClicks: UserListAdapterClicks? = null
 

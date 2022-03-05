@@ -35,7 +35,7 @@ class CharacterListFragment : BaseFragment<FragmentCharacterListBinding>() {
     }
 
     private val characterListAdapter by lazy(LazyThreadSafetyMode.NONE) {
-        CharacterListAdapter()
+        CharactersAdapter()
     }
 
     private val skeletonAdapter by lazy(LazyThreadSafetyMode.NONE) {

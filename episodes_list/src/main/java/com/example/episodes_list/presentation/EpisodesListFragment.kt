@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.Consts.EPISODES_LIST
 import com.example.core.base.BaseFragment
 import com.example.core.base.BaseViewModelFactory
@@ -27,6 +28,14 @@ class EpisodesListFragment : BaseFragment<FragmentEpisodesListBinding>() {
         viewModelFactory.get()
     }
 
+    private val episodesAdapter by lazy(LazyThreadSafetyMode.NONE) {
+        EpisodesAdapter()
+    }
+
+    private val skeletonAdapter by lazy(LazyThreadSafetyMode.NONE) {
+        SkeletonAdapter()
+    }
+
     override fun initBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -41,11 +50,23 @@ class EpisodesListFragment : BaseFragment<FragmentEpisodesListBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val episodes = arguments?.getString(EPISODES_LIST)
-        Log.e("EpisodesListFragment", "$episodes")
         viewModel.fetchEpisodes(episodes!!)
+        initUi()
         viewModel.viewState.observe(viewLifecycleOwner, { viewState ->
             bindViewState(viewState)
         })
+    }
+
+    private fun initUi() {
+//        binding.recyclerViewSkeleton.run {
+//            layoutManager = LinearLayoutManager(context)
+//            adapter = skeletonAdapter
+//        }
+
+        binding.recyclerView.run {
+            layoutManager = LinearLayoutManager(context)
+            adapter = episodesAdapter
+        }
     }
 
     private fun bindViewState(viewState: EpisodesInfoViewState) {
@@ -56,6 +77,7 @@ class EpisodesListFragment : BaseFragment<FragmentEpisodesListBinding>() {
             }
 
             is EpisodesInfoViewState.Success -> {
+                episodesAdapter.submitList(viewState.episodes)
                 Log.e("EpisodesInfoViewState", "Success ${viewState.episodes}")
             }
 
