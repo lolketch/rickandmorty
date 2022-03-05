@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.character_info.CharactersInfoViewState
 import com.example.character_info.domain.FetchCharacterInfo
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
 internal class CharacterInfoViewModel @Inject constructor(
@@ -16,7 +15,7 @@ internal class CharacterInfoViewModel @Inject constructor(
 
     fun fetchCharacterInfo(id: Int) {
         fetchCharacterInfo.execute(
-            data = id,
+            queryParameters = mapOf("id" to id),
             onStart = {
                 _viewState.value = CharactersInfoViewState.Loading
             },

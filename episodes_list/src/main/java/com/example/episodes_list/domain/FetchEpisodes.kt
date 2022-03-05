@@ -8,10 +8,11 @@ import javax.inject.Inject
 internal class FetchEpisodes @Inject constructor(
     private val repository: EpisodesListRepository,
     schedulerProvider: SchedulerProvider
-) : UseCase<List<Episode>, String>(schedulerProvider) {
+) : UseCase<List<Episode>>(schedulerProvider) {
 
-    override fun buildUseCase(data: String): Single<List<Episode>> {
-        return repository.fetchEpisodes(data).map { listOfEpisodesDto ->
+    override fun buildUseCase(queryParameters: Map<String,Any>): Single<List<Episode>> {
+        val episodes = queryParameters["episodes"].toString()
+        return repository.fetchEpisodes(episodes).map { listOfEpisodesDto ->
             listOfEpisodesDto.map { episodeDto ->
                 episodeDto.toEpisode()
             }
