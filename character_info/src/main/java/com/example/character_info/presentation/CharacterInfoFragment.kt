@@ -12,13 +12,13 @@ import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.character_info.CharactersInfoViewState
 import com.example.character_info.R
 import com.example.character_info.databinding.FragmentCharacterInfoBinding
 import com.example.character_info.di.CharacterInfoComponentViewModel
 import com.example.character_info.domain.Character
 import com.example.core.Constance.CHARACTER_ID
 import com.example.core.Constance.EPISODES_LIST
+import com.example.core.ViewState
 import com.example.core.base.BaseFragment
 import com.example.core.base.BaseViewModelFactory
 import dagger.Lazy
@@ -57,19 +57,19 @@ class CharacterInfoFragment : BaseFragment<FragmentCharacterInfoBinding>() {
         })
     }
 
-    private fun bindViewState(viewState: CharactersInfoViewState) {
+    private fun bindViewState(viewState: ViewState) {
         when (viewState) {
 
-            is CharactersInfoViewState.Loading -> {
+            is ViewState.Loading -> {
                 viewVisibilityLoading()
             }
 
-            is CharactersInfoViewState.Success -> {
+            is ViewState.Success -> {
                 viewVisibilitySuccess()
-                initViewSuccess(viewState.character)
+                initViewSuccess(viewState.data as Character)
             }
 
-            is CharactersInfoViewState.Error -> {
+            is ViewState.Error -> {
                 viewVisibilityError()
             }
         }
