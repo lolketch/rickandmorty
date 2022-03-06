@@ -1,9 +1,7 @@
 package com.example.character_info.presentation
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,13 +17,11 @@ import com.example.character_info.R
 import com.example.character_info.databinding.FragmentCharacterInfoBinding
 import com.example.character_info.di.CharacterInfoComponentViewModel
 import com.example.character_info.domain.Character
-import com.example.core.Consts.CHARACTER_ID
-import com.example.core.Consts.EPISODES_LIST
+import com.example.core.Constance.CHARACTER_ID
+import com.example.core.Constance.EPISODES_LIST
 import com.example.core.base.BaseFragment
 import com.example.core.base.BaseViewModelFactory
-import com.google.android.material.snackbar.Snackbar
 import dagger.Lazy
-import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class CharacterInfoFragment : BaseFragment<FragmentCharacterInfoBinding>() {

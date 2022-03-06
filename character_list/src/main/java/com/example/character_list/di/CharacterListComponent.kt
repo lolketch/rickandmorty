@@ -2,10 +2,8 @@ package com.example.character_list.di
 
 import androidx.annotation.RestrictTo
 import androidx.lifecycle.ViewModel
-import com.example.api.CharactersApi
 import com.example.api.RemoteDataSource
 import com.example.character_list.presentation.CharacterListFragment
-import com.example.core.InternetConnection
 import com.example.core.di.FeatureScope
 import com.example.core.di.SchedulerModule
 import dagger.Component

@@ -6,12 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.core.Consts.EPISODES_LIST
+import com.example.core.Constance.EPISODES_LIST
 import com.example.core.base.BaseFragment
 import com.example.core.base.BaseViewModelFactory
 import com.example.episodes_list.EpisodesInfoViewState

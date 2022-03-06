@@ -21,7 +21,7 @@ import com.example.character_list.R
 import com.example.character_list.databinding.FragmentCharacterListBinding
 import com.example.character_list.di.CharacterListComponentViewModel
 import com.example.character_list.domain.Character
-import com.example.core.Consts.CHARACTER_ID
+import com.example.core.Constance.CHARACTER_ID
 import com.example.core.base.BaseFragment
 import com.example.core.base.BaseViewModelFactory
 import dagger.Lazy

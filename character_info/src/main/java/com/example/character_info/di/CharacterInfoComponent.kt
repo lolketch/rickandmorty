@@ -4,7 +4,6 @@ import androidx.annotation.RestrictTo
 import androidx.lifecycle.ViewModel
 import com.example.api.RemoteDataSource
 import com.example.character_info.presentation.CharacterInfoFragment
-import com.example.core.InternetConnection
 import com.example.core.di.FeatureScope
 import com.example.core.di.SchedulerModule
 import dagger.Component
