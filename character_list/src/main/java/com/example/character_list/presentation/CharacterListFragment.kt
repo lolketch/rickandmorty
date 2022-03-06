@@ -2,7 +2,6 @@ package com.example.character_list.presentation
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +14,9 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.character_list.CharactersListViewState
+import com.example.core.ViewState
 import com.example.character_list.R
 import com.example.character_list.databinding.FragmentCharacterListBinding
 import com.example.character_list.di.CharacterListComponentViewModel
@@ -63,35 +63,34 @@ class CharacterListFragment : BaseFragment<FragmentCharacterListBinding>() {
     }
 
     private fun initUi() {
-        binding.recyclerViewSkeleton.run {
-            layoutManager = LinearLayoutManager(context)
-            adapter = skeletonAdapter
-        }
+        with(binding) {
 
-        binding.recyclerView.run {
-            layoutManager = LinearLayoutManager(context)
-            adapter = characterListAdapter.withLoadStateHeaderAndFooter(
-                header = LoaderStateAdapter(characterListAdapter),
-                footer = LoaderStateAdapter(characterListAdapter)
-            )
+            recyclerViewSkeleton.run {
+                layoutManager = LinearLayoutManager(context)
+                adapter = skeletonAdapter
+            }
+
+            recyclerView.run {
+                layoutManager = LinearLayoutManager(context)
+                adapter = characterListAdapter.withLoadStateHeaderAndFooter(
+                    header = LoaderStateAdapter(characterListAdapter),
+                    footer = LoaderStateAdapter(characterListAdapter)
+                )
+            }
         }
     }
 
     private fun addLoadStateListener() {
         characterListAdapter.addLoadStateListener { state: CombinedLoadStates ->
-
             when (state.refresh) {
                 is LoadState.Loading -> {
-                    Log.e("LoadState","Loading")
                     binding.recyclerViewSkeleton.visibility = View.VISIBLE
                 }
                 is LoadState.NotLoading -> {
-                    Log.e("LoadState","NotLoading")
                     binding.recyclerView.isVisible
                     binding.recyclerViewSkeleton.visibility = View.GONE
                 }
                 is LoadState.Error -> {
-                    Log.e("LoadState","Error")
                     findNavController().navigate(R.id.action_characterListFragment_to_errorFragment)
                     binding.recyclerViewSkeleton.visibility = View.GONE
                 }
@@ -109,25 +108,12 @@ class CharacterListFragment : BaseFragment<FragmentCharacterListBinding>() {
         })
     }
 
-    private fun bindViewState(viewState: CharactersListViewState) {
-        when (viewState) {
-
-            is CharactersListViewState.Loading -> {
-                Log.e("Data Loading", "Loading")
-
-            }
-
-            is CharactersListViewState.Success -> {
-                characterListAdapter.submitData(
-                    lifecycle = lifecycle,
-                    pagingData = viewState.pagingData
-                )
-                Log.e("Data Success", viewState.pagingData.toString())
-            }
-
-            is CharactersListViewState.Error -> {
-                Log.e("Data Error", viewState.message)
-            }
+    private fun bindViewState(viewState: ViewState) {
+        if (viewState is ViewState.Success) {
+            characterListAdapter.submitData(
+                lifecycle = lifecycle,
+                pagingData = viewState.data as PagingData<Character>
+            )
         }
     }
 }

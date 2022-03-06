@@ -5,12 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.rxjava3.cachedIn
-import com.example.character_list.CharactersListViewState
+import com.example.core.ViewState
 import com.example.character_list.domain.FetchCharacters
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
 
 internal class CharacterListViewModel @Inject constructor(
@@ -18,24 +17,24 @@ internal class CharacterListViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
-    private val _viewState = MutableLiveData<CharactersListViewState>()
-    val viewState: LiveData<CharactersListViewState> = _viewState
+    private val _viewState = MutableLiveData<ViewState>()
+    val viewState: LiveData<ViewState> = _viewState
 
     init {
         fetchCharacters()
     }
 
-    fun fetchCharacters() {
-        _viewState.value = CharactersListViewState.Loading
+    private fun fetchCharacters() {
+        _viewState.value = ViewState.Loading
         compositeDisposable.addAll(
             fetchCharacters.getData()
                 .cachedIn(viewModelScope)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    _viewState.value = CharactersListViewState.Success(it)
+                    _viewState.value = ViewState.Success(it)
                 }, {
-                    _viewState.value = CharactersListViewState.Error(it.message.toString())
+                    _viewState.value = ViewState.Error(it.message.toString())
                 })
         )
     }

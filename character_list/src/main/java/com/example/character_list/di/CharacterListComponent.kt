@@ -28,8 +28,6 @@ internal interface CharacterListComponent {
 
 interface CharacterListDeps {
     val remoteDataSource: RemoteDataSource
-
-    val internetConnection: InternetConnection
 }
 
 

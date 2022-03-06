@@ -29,8 +29,6 @@ internal interface CharacterInfoComponent {
 
 interface CharacterInfoDeps {
     val remoteDataSource: RemoteDataSource
-
-    val internetConnection: InternetConnection
 }
 
 interface CharacterInfoDepsProvider {

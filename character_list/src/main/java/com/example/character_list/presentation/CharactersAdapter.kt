@@ -1,6 +1,5 @@
 package com.example.character_list.presentation
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -27,7 +26,6 @@ class CharactersAdapter : PagingDataAdapter<Character, CharacterViewHolder>(COMP
         holder.bind(getItem(position))
 
         holder.itemView.setOnClickListener {
-            Log.e("CharacterListAdapter", "${getItem(position)?.id}")
             userListAdapterClicks?.onItemClick(getItem(position))
         }
     }

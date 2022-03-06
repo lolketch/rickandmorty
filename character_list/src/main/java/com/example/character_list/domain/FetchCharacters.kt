@@ -18,29 +18,3 @@ internal class FetchCharacters @Inject constructor(
         }
     }
 }
-
-//interface CharacterListUseCase {
-//    interface FetchEpisodes { //todo(1:49:00)
-//        fun getEpisodes()
-//    }
-//
-//    interface FetchPlanets {
-//        fun getPlanets()
-//    }
-//
-//    interface FetchCharacters<T> : UseCaseTest<T>
-//
-//    class Base @Inject constructor(
-//        private val repository: CharacterListRepository,
-//        override val schedulerProvider: SchedulerProvider,
-//
-//        ) : CharacterListUseCase.FetchCharacters<PagingData<Character>> {
-//
-//        override val compositeDisposable = CompositeDisposable()
-//
-//        override fun buildUseCase(): Observable<PagingData<Character>> {
-//            TODO("Not yet implemented")
-//        }
-//
-//    }
-//}
