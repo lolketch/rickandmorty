@@ -2,7 +2,6 @@ package com.example.feature_error.presentation
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,11 +48,8 @@ class ErrorFragment : BaseFragment<FragmentErrorBinding>() {
     private fun observerConnection() {
         viewModel.connection.observe(viewLifecycleOwner, { connection ->
             if (connection == true) {
-                Log.e("observerConnection","true")
                 findNavController().navigate(R.id.action_errorFragment_to_characterListFragment)
             }
-            Log.e("observerConnection","false")
-
         })
     }
 }
