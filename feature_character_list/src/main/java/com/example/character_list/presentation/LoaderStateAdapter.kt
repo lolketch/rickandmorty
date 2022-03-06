@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
@@ -53,9 +54,7 @@ class LoaderStateAdapter(private val adapter: CharactersAdapter) :
         ItemViewHolder(itemView) {
         override fun bind(loadState: LoadState) {
             require(loadState is LoadState.Error)
-            itemView.findViewById<TextView>(R.id.error_message).text =
-                loadState.error.localizedMessage
-            itemView.findViewById<Button>(R.id.retryBtn)
+            itemView.findViewById<ImageButton>(R.id.retryBtn)
                 .also {
                     it.setOnClickListener { retryCallback() }
                 }

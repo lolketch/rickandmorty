@@ -3,4 +3,5 @@
     <string name="error_title">Какой-то сверхразум все сломал</string>
     <string name="error_title2">Постараемся быстро починить</string>
     <string name="error_retry">Попробовать снова</string>
+    <string name="error_message">Не могу обновить данные.\nПроверь соединение с интернетом.</string>
 </resources>
