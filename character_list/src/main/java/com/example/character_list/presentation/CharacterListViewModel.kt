@@ -25,7 +25,7 @@ internal class CharacterListViewModel @Inject constructor(
         fetchCharacters()
     }
 
-    private fun fetchCharacters() {
+    fun fetchCharacters() {
         _viewState.value = CharactersListViewState.Loading
         compositeDisposable.addAll(
             fetchCharacters.getData()

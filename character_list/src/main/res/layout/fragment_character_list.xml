@@ -10,12 +10,12 @@
         android:id="@+id/recyclerViewSkeleton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/skeleton_item"/>
+        tools:listitem="@layout/skeleton_item" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item"/>
+        tools:listitem="@layout/item" />
 
 </FrameLayout>

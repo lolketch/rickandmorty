@@ -79,12 +79,22 @@ class CharacterListFragment : BaseFragment<FragmentCharacterListBinding>() {
 
     private fun addLoadStateListener() {
         characterListAdapter.addLoadStateListener { state: CombinedLoadStates ->
-            val refreshState = state.refresh
 
-            if (refreshState == LoadState.Loading) {
-            } else {
-                binding.recyclerView.isVisible
-                binding.recyclerViewSkeleton.visibility = View.GONE
+            when (state.refresh) {
+                is LoadState.Loading -> {
+                    Log.e("LoadState","Loading")
+                    binding.recyclerViewSkeleton.visibility = View.VISIBLE
+                }
+                is LoadState.NotLoading -> {
+                    Log.e("LoadState","NotLoading")
+                    binding.recyclerView.isVisible
+                    binding.recyclerViewSkeleton.visibility = View.GONE
+                }
+                is LoadState.Error -> {
+                    Log.e("LoadState","Error")
+                    findNavController().navigate(R.id.action_characterListFragment_to_errorFragment)
+                    binding.recyclerViewSkeleton.visibility = View.GONE
+                }
             }
         }
     }
@@ -104,7 +114,6 @@ class CharacterListFragment : BaseFragment<FragmentCharacterListBinding>() {
 
             is CharactersListViewState.Loading -> {
                 Log.e("Data Loading", "Loading")
-                binding.recyclerViewSkeleton.visibility = View.VISIBLE
 
             }
 

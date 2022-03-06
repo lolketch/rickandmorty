@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_characterListFragment_to_characterInfoFragment"
             app:destination="@id/characterInfoFragment" />
+        <action
+            android:id="@+id/action_characterListFragment_to_errorFragment"
+            app:destination="@id/errorFragment" />
     </fragment>
 
     <fragment
@@ -32,6 +35,18 @@
         android:label="fragment_character_list"
         tools:layout="@layout/fragment_episodes_list">
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/errorFragment"
+        android:name="com.example.feature_error.presentation.ErrorFragment"
+        android:label="fragment_error"
+        tools:layout="@layout/fragment_error">
+
+        <action
+            android:id="@+id/action_errorFragment_to_characterListFragment"
+            app:popUpToInclusive="false"
+            app:destination="@id/characterListFragment" />
     </fragment>
 
 </navigation>
