@@ -1,6 +1,7 @@
 package com.example.character_info.presentation
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -22,7 +23,9 @@ import com.example.core.Consts.CHARACTER_ID
 import com.example.core.Consts.EPISODES_LIST
 import com.example.core.base.BaseFragment
 import com.example.core.base.BaseViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 import dagger.Lazy
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class CharacterInfoFragment : BaseFragment<FragmentCharacterInfoBinding>() {
@@ -106,6 +109,7 @@ class CharacterInfoFragment : BaseFragment<FragmentCharacterInfoBinding>() {
 
     private fun viewVisibilitySuccess() {
         with(binding) {
+            viewError.visibility = View.GONE
             progressBar.visibility = View.GONE
             imageGender.visibility = View.VISIBLE
             imageLocation.visibility = View.VISIBLE
@@ -116,6 +120,7 @@ class CharacterInfoFragment : BaseFragment<FragmentCharacterInfoBinding>() {
 
     private fun viewVisibilityLoading() {
         with(binding) {
+            viewError.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
             imageGender.visibility = View.GONE
             imageLocation.visibility = View.GONE
@@ -126,6 +131,7 @@ class CharacterInfoFragment : BaseFragment<FragmentCharacterInfoBinding>() {
 
     private fun viewVisibilityError() {
         with(binding) {
+            viewError.visibility = View.VISIBLE
             btnEpisodes.visibility = View.GONE
             progressBar.visibility = View.GONE
         }

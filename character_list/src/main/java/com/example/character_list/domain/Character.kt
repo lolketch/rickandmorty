@@ -1,6 +1,6 @@
 package com.example.character_list.domain
 
-import com.example.api.CharacterDto
+import com.example.api.models.CharacterDto
 
 data class Character(
     val id: Int,

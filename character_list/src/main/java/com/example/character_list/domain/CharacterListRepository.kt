@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.rxjava3.observable
-import com.example.api.CharacterDto
+import com.example.api.models.CharacterDto
 import com.example.api.RemoteDataSource
 import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject

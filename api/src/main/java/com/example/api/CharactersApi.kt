@@ -1,5 +1,8 @@
 package com.example.api
 
+import com.example.api.models.CharacterDto
+import com.example.api.models.Characters
+import com.example.api.models.EpisodeDto
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

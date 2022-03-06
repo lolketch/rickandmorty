@@ -1,8 +1,8 @@
 package com.example.character_info.domain
 
-import com.example.api.CharacterDto
-import com.example.api.Location
-import com.example.api.Origin
+import com.example.api.models.CharacterDto
+import com.example.api.models.Location
+import com.example.api.models.Origin
 
 data class Character(
     val id: Int,

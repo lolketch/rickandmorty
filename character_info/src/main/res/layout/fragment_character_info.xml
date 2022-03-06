@@ -157,5 +157,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <TextView
+        android:id="@+id/viewError"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#FFF44336"
+        android:textAlignment="center"
+        android:text="@string/error"
+        android:textColor="#FFFFFF"
+        android:layout_margin="25dp"
+        android:padding="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

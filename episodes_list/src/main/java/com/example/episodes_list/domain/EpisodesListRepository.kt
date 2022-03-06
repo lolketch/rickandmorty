@@ -1,6 +1,6 @@
 package com.example.episodes_list.domain
 
-import com.example.api.EpisodeDto
+import com.example.api.models.EpisodeDto
 import com.example.api.RemoteDataSource
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject

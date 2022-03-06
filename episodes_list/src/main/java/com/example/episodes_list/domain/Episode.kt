@@ -1,6 +1,6 @@
 package com.example.episodes_list.domain
 
-import com.example.api.EpisodeDto
+import com.example.api.models.EpisodeDto
 
 data class Episode(
     val id: Int,

@@ -74,16 +74,40 @@ class EpisodesListFragment : BaseFragment<FragmentEpisodesListBinding>() {
 
             is EpisodesInfoViewState.Loading -> {
                 Log.e("EpisodesInfoViewState", "Loading")
+                viewVisibilityLoading()
             }
 
             is EpisodesInfoViewState.Success -> {
                 episodesAdapter.submitList(viewState.episodes)
+                viewVisibilitySuccess()
                 Log.e("EpisodesInfoViewState", "Success ${viewState.episodes}")
             }
 
             is EpisodesInfoViewState.Error -> {
+                viewVisibilityError()
                 Log.e("EpisodesInfoViewState", "Error ${viewState.message}")
             }
+        }
+    }
+
+    private fun viewVisibilitySuccess() {
+        with(binding) {
+            viewError.visibility = View.GONE
+            progressBar.visibility = View.GONE
+        }
+    }
+
+    private fun viewVisibilityLoading() {
+        with(binding) {
+            viewError.visibility = View.GONE
+            progressBar.visibility = View.VISIBLE
+        }
+    }
+
+    private fun viewVisibilityError() {
+        with(binding) {
+            viewError.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
         }
     }
 }
