@@ -2,7 +2,6 @@ package com.example.episodes_list.presentation
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +10,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.Constance.EPISODES_LIST
+import com.example.core.ViewState
 import com.example.core.base.BaseFragment
 import com.example.core.base.BaseViewModelFactory
-import com.example.episodes_list.EpisodesInfoViewState
 import com.example.episodes_list.databinding.FragmentEpisodesListBinding
 import com.example.episodes_list.di.EpisodeListComponentViewModel
+import com.example.episodes_list.domain.Episode
 import dagger.Lazy
 import javax.inject.Inject
 
@@ -29,10 +29,6 @@ class EpisodesListFragment : BaseFragment<FragmentEpisodesListBinding>() {
 
     private val episodesAdapter by lazy(LazyThreadSafetyMode.NONE) {
         EpisodesAdapter()
-    }
-
-    private val skeletonAdapter by lazy(LazyThreadSafetyMode.NONE) {
-        SkeletonAdapter()
     }
 
     override fun initBinding(
@@ -57,34 +53,26 @@ class EpisodesListFragment : BaseFragment<FragmentEpisodesListBinding>() {
     }
 
     private fun initUi() {
-//        binding.recyclerViewSkeleton.run {
-//            layoutManager = LinearLayoutManager(context)
-//            adapter = skeletonAdapter
-//        }
-
         binding.recyclerView.run {
             layoutManager = LinearLayoutManager(context)
             adapter = episodesAdapter
         }
     }
 
-    private fun bindViewState(viewState: EpisodesInfoViewState) {
+    private fun bindViewState(viewState: ViewState) {
         when (viewState) {
 
-            is EpisodesInfoViewState.Loading -> {
-                Log.e("EpisodesInfoViewState", "Loading")
+            is ViewState.Loading -> {
                 viewVisibilityLoading()
             }
 
-            is EpisodesInfoViewState.Success -> {
-                episodesAdapter.submitList(viewState.episodes)
+            is ViewState.Success -> {
+                episodesAdapter.submitList(viewState.data as List<Episode>)
                 viewVisibilitySuccess()
-                Log.e("EpisodesInfoViewState", "Success ${viewState.episodes}")
             }
 
-            is EpisodesInfoViewState.Error -> {
+            is ViewState.Error -> {
                 viewVisibilityError()
-                Log.e("EpisodesInfoViewState", "Error ${viewState.message}")
             }
         }
     }
