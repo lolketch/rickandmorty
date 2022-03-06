@@ -49,6 +49,9 @@ class CharacterInfoFragment : BaseFragment<FragmentCharacterInfoBinding>() {
         val characterId: Int = arguments?.getInt(CHARACTER_ID)!!
         viewModel.fetchCharacterInfo(characterId)
         observe()
+        binding.imageViewBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun observe() {
