@@ -12,11 +12,11 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/api" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/character_info" />
-            <option value="$PROJECT_DIR$/character_list" />
             <option value="$PROJECT_DIR$/core" />
-            <option value="$PROJECT_DIR$/episodes_list" />
+            <option value="$PROJECT_DIR$/feature_character_list" />
+            <option value="$PROJECT_DIR$/feature_episodes_list" />
             <option value="$PROJECT_DIR$/feature_error" />
+            <option value="$PROJECT_DIR$/ferature_character_info" />
             <option value="$PROJECT_DIR$/navigation" />
           </set>
         </option>
