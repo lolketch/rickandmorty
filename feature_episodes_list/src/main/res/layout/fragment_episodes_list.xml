@@ -21,16 +21,4 @@
         android:layout_height="match_parent"
         tools:listitem="@layout/item_episode" />
 
-    <TextView
-        android:id="@+id/viewError"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="25dp"
-        android:background="#FFF44336"
-        android:padding="15dp"
-        android:text="@string/error"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:visibility="invisible" />
 </FrameLayout>

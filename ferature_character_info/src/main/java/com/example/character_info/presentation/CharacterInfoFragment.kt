@@ -1,10 +1,12 @@
 package com.example.character_info.presentation
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -73,6 +75,7 @@ class CharacterInfoFragment : BaseFragment<FragmentCharacterInfoBinding>() {
             }
 
             is ViewState.Error -> {
+                onSnackbar(getString(R.string.error),requireContext().getColor(R.color.error))
                 viewVisibilityError()
             }
         }
@@ -108,7 +111,6 @@ class CharacterInfoFragment : BaseFragment<FragmentCharacterInfoBinding>() {
 
     private fun viewVisibilitySuccess() {
         with(binding) {
-            viewError.visibility = View.GONE
             progressBar.visibility = View.GONE
             imageGender.visibility = View.VISIBLE
             imageLocation.visibility = View.VISIBLE
@@ -119,7 +121,6 @@ class CharacterInfoFragment : BaseFragment<FragmentCharacterInfoBinding>() {
 
     private fun viewVisibilityLoading() {
         with(binding) {
-            viewError.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
             imageGender.visibility = View.GONE
             imageLocation.visibility = View.GONE
@@ -130,7 +131,6 @@ class CharacterInfoFragment : BaseFragment<FragmentCharacterInfoBinding>() {
 
     private fun viewVisibilityError() {
         with(binding) {
-            viewError.visibility = View.VISIBLE
             btnEpisodes.visibility = View.GONE
             progressBar.visibility = View.GONE
         }
