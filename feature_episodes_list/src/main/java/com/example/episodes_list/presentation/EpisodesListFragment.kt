@@ -13,6 +13,7 @@ import com.example.core.Constance.EPISODES_LIST
 import com.example.core.ViewState
 import com.example.core.base.BaseFragment
 import com.example.core.base.BaseViewModelFactory
+import com.example.episodes_list.R
 import com.example.episodes_list.databinding.FragmentEpisodesListBinding
 import com.example.episodes_list.di.EpisodeListComponentViewModel
 import com.example.episodes_list.domain.Episode
@@ -73,27 +74,25 @@ class EpisodesListFragment : BaseFragment<FragmentEpisodesListBinding>() {
 
             is ViewState.Error -> {
                 viewVisibilityError()
+                onSnackbar(requireContext().getString(R.string.error), requireContext().getColor(R.color.error))
             }
         }
     }
 
     private fun viewVisibilitySuccess() {
         with(binding) {
-            viewError.visibility = View.GONE
             progressBar.visibility = View.GONE
         }
     }
 
     private fun viewVisibilityLoading() {
         with(binding) {
-            viewError.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
         }
     }
 
     private fun viewVisibilityError() {
         with(binding) {
-            viewError.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
         }
     }
